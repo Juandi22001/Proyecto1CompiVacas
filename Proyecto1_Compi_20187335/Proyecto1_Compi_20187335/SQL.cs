@@ -20,8 +20,10 @@ namespace Proyecto1_Compi_20187335
         LinkedList<Object> ayudaaaa2 = new LinkedList<Object>();
         LinkedList<Object> ayudaaaa3 = new LinkedList<Object>();
         LinkedList<Object> ayudaaaa4 = new LinkedList<Object>();
+        LinkedList<Object> RemplA = new LinkedList<Object>();
+        LinkedList<Object> CampoR = new LinkedList<Object>();
         LinkedList<int> ayudita = new LinkedList<int>();
-        LinkedList<String> ListaTablas;
+        LinkedList<String> ListaTablas= new LinkedList<String>();
 
         ListaTablas Table = new ListaTablas();
         bool ayuda = false;
@@ -58,7 +60,8 @@ namespace Proyecto1_Compi_20187335
         void COMIENZO()
         {
             Console.WriteLine("Comienzo" + "--->" + " " + alvAct.getLexema());
-
+             elimibnar = false;
+            act = false;
             if (alvAct.getTipo_Token() == Tokens.TipoToken.CREAR || alvAct.getTipo_Token() == Tokens.TipoToken.INSERTAR
                 || alvAct.getTipo_Token() == Tokens.TipoToken.ELIMINAR || alvAct.getTipo_Token() == Tokens.TipoToken.SELECCIONAR
                || alvAct.getTipo_Token() == Tokens.TipoToken.ACTUALIZAR)
@@ -110,8 +113,17 @@ namespace Proyecto1_Compi_20187335
             }
 
         }
+        bool act = false;
+
+        String CampoAct = "";
+        String Rempla = "";
         void ACTUALIZAR()
         {
+            CampoR = new LinkedList<Object>();
+            RemplA = new LinkedList<Object>();
+           
+            TablaE = alvAct.getLexema();
+            act=true;
             emparejar(Tokens.TipoToken.ID);
             emparejar(Tokens.TipoToken.ESTABLECER);
             emparejar(Tokens.TipoToken.PARENTESIS_ABIERTO);
@@ -126,10 +138,11 @@ namespace Proyecto1_Compi_20187335
 
         void Est()
         {
+            CampoR.AddLast(alvAct.getLexema());
             emparejar(Tokens.TipoToken.ID);
 
             emparejar(Tokens.TipoToken.IGUAL);
-            DATO1();
+            DATO2();
             Est2();
         }
         void Est2()
@@ -137,6 +150,7 @@ namespace Proyecto1_Compi_20187335
             if (alvAct.getTipo_Token() == Tokens.TipoToken.COMA)
             {
                 emparejar(Tokens.TipoToken.COMA);
+                Est();
 
             }
             else
@@ -490,7 +504,56 @@ void LlenarSano(String a)
                 //EPSILOON
             }
         }
+        void DATO2()
+        {
+            if (alvAct.getTipo_Token() == Tokens.TipoToken.DIGITO)
+            {
+                Remplazo = alvAct.getLexema();
+                RemplA.AddLast(alvAct.getLexema());
+                emparejar(Tokens.TipoToken.DIGITO);
 
+
+
+            }
+            else if (alvAct.getTipo_Token() == Tokens.TipoToken.DECIMAL)
+            {
+                Remplazo = alvAct.getLexema();
+
+                RemplA.AddLast(alvAct.getLexema());
+                emparejar(Tokens.TipoToken.DECIMAL);
+
+            }
+            else if (alvAct.getTipo_Token() == Tokens.TipoToken.FECHAS)
+            {
+                Remplazo = alvAct.getLexema();
+
+                RemplA.AddLast(alvAct.getLexema());
+                emparejar(Tokens.TipoToken.FECHAS);
+
+            }
+            else if (alvAct.getTipo_Token() == Tokens.TipoToken.COMILLA)
+            {
+                RemplA.AddLast(alvAct.getLexema());
+                Remplazo = alvAct.getLexema();
+                emparejar(Tokens.TipoToken.COMILLA);
+
+            }
+            else if (alvAct.getTipo_Token() == Tokens.TipoToken.ID)
+            {
+                Remplazo = alvAct.getLexema();
+
+                RemplA.AddLast(alvAct.getLexema());
+                emparejar(Tokens.TipoToken.ID);
+            
+
+            }
+            else
+            {
+                //EFEEE
+            }
+
+
+        }
         void DATO1()
         {
             if (alvAct.getTipo_Token() == Tokens.TipoToken.DIGITO)
@@ -529,6 +592,7 @@ void LlenarSano(String a)
             }
             else if (alvAct.getTipo_Token() == Tokens.TipoToken.ID)
             {
+                Remplazo = alvAct.getLexema();
                 Colaux = alvAct.getLexema();
                 TABLA2B = alvAct.getLexema();
                 emparejar(Tokens.TipoToken.ID);
@@ -666,9 +730,6 @@ void LlenarSano(String a)
                     alv2.Objetos = alv4.Objetos;
 
 
-
-
-
                 }
 
 
@@ -717,6 +778,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
 
                         }
 
@@ -726,6 +792,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                         }
 
                         else if (Convert.ToInt32(AUX.GetNombre()) < Convert.ToInt32(AUX2.ToString()) && Simbolo.Equals("<"))
@@ -734,6 +805,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
 
                         }
                         else if (Convert.ToInt32(AUX.GetNombre()) <= Convert.ToInt32(AUX2.ToString()) && Simbolo.Equals("<="))
@@ -742,6 +818,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
 
                         }
                         else if (Convert.ToInt32(AUX.GetNombre()) > Convert.ToInt32(AUX2.ToString()) && Simbolo.Equals(">"))
@@ -750,6 +831,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
 
                         }
                        
@@ -759,6 +845,11 @@ void LlenarSano(String a)
 
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
 
                         }
                     
@@ -771,8 +862,21 @@ void LlenarSano(String a)
                 MessageBox.Show("efe");
             }
 
-            Llenar2(cool3);
 
+            if (elimibnar == false && act == false)
+            {
+
+                Llenar2(cool3);
+
+            }
+            else if (elimibnar == true)
+            {
+                BorrarChido(ayudita);
+            }
+            else if (act == true)
+            {
+                ActChido(ayudita);
+            }
 
 
 
@@ -828,7 +932,15 @@ void LlenarSano(String a)
                         if (Simbolo.Equals("=") && Dato.Equals(XD.GetNombre()))
                         {
                             Console.WriteLine("encontrado");
-                            ayudita.AddLast(cont); cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
+
+
+
+                            if (XD.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(XD.GetpOS());
+
+                            }
+                            cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
 
                         }
@@ -836,6 +948,11 @@ void LlenarSano(String a)
                         {
                             if (Convert.ToInt32(XD.GetNombre()) != Int32.Parse(Dato))
                             {
+                                if (XD.GetTabla().Equals(TablaE))
+                                {
+                                    ayudita.AddLast(XD.GetpOS());
+
+                                }
                                 cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
                                 Console.WriteLine("encontrado"); ayudita.AddLast(cont);
@@ -847,6 +964,11 @@ void LlenarSano(String a)
                         {
                             if (Convert.ToInt32(XD.GetNombre()) <= Int32.Parse(Dato))
                             {
+                                if (XD.GetTabla().Equals(TablaE))
+                                {
+                                    ayudita.AddLast(XD.GetpOS());
+
+                                }
 
 
                                 Console.WriteLine("encontrado");
@@ -859,6 +981,11 @@ void LlenarSano(String a)
                             if (Convert.ToInt32(XD.GetNombre()) <= Int32.Parse(Dato))
                             {
 
+                                if (XD.GetTabla().Equals(TablaE))
+                                {
+                                    ayudita.AddLast(XD.GetpOS());
+
+                                }
 
                                 Console.WriteLine("encontrado");
                                 cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
@@ -870,6 +997,11 @@ void LlenarSano(String a)
                             if (Int32.Parse(Dato) > Int32.Parse(XD.GetNombre().ToString()))
                             {
 
+                                if (XD.GetTabla().Equals(TablaE))
+                                {
+                                    ayudita.AddLast(XD.GetpOS());
+
+                                }
 
                                 Console.WriteLine("encontrado");
                                 cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
@@ -878,6 +1010,11 @@ void LlenarSano(String a)
                         }
                         else if (Simbolo.Equals(">=") && Convert.ToInt32(XD.GetNombre()) >= Int32.Parse(Dato))
                         {
+                            if (XD.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(XD.GetpOS());
+
+                            }
                             Console.WriteLine("encontrado");
                             cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
@@ -886,6 +1023,11 @@ void LlenarSano(String a)
                     }
                     else if (Simbolo.Equals("=") && Dato.Equals(XD.GetNombre()) && TDato.Equals("cadena"))
                     {
+                        if (XD.GetTabla().Equals(TablaE))
+                        {
+                            ayudita.AddLast(XD.GetpOS());
+
+                        }
                         Console.WriteLine("encontrado");
                         cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
@@ -893,6 +1035,11 @@ void LlenarSano(String a)
                     }
                     else if (Dato != XD.GetNombre().ToString() && Simbolo.Equals("!=") && TDato.Equals("cadena"))
                     {
+                        if (XD.GetTabla().Equals(TablaE))
+                        {
+                            ayudita.AddLast(XD.GetpOS());
+
+                        }
                         Console.WriteLine("encontrado");
                         cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
@@ -900,6 +1047,11 @@ void LlenarSano(String a)
                     }
                     else if (Simbolo.Equals("=") && Dato.Equals(XD.GetNombre()) && TDato.Equals("fecha"))
                     {
+                        if (XD.GetTabla().Equals(TablaE))
+                        {
+                            ayudita.AddLast(XD.GetpOS());
+
+                        }
                         Console.WriteLine("encontrado");
                         cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
@@ -907,6 +1059,11 @@ void LlenarSano(String a)
                     }
                     else if (Dato != XD.GetNombre().ToString() && Simbolo.Equals("!=") && TDato.Equals("fecha"))
                     {
+                        if (XD.GetTabla().Equals(TablaE))
+                        {
+                            ayudita.AddLast(XD.GetpOS());
+
+                        }
                         Console.WriteLine("encontrado");
                         cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
@@ -982,7 +1139,21 @@ void LlenarSano(String a)
             {
                 Console.WriteLine("truena");
             }
-            Llenar2(cool3);
+
+            if (elimibnar == false && act == false)
+            {
+
+                Llenar2(cool3);
+
+            }
+            else if (elimibnar == true)
+            {
+                BorrarChido(ayudita);
+            }
+            else if (act == true)
+            {
+                ActChido(ayudita);
+            }
         }
         void Caso4(String TABLA11, String Colaux,String  Simbolo)
         {
@@ -1064,7 +1235,13 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
-                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
+                            cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
 
                         }
@@ -1073,6 +1250,12 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
                         }
@@ -1081,6 +1264,12 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
 
@@ -1089,6 +1278,12 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
 
@@ -1097,6 +1292,12 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
 
@@ -1105,6 +1306,12 @@ void LlenarSano(String a)
                         {
                             Console.WriteLine("encontrado");
 
+
+                            if (AUX.GetTabla().Equals(TablaE))
+                            {
+                                ayudita.AddLast(AUX.GetpOS());
+
+                            }
                             cool3.AddLast(new ObjetoCool(AUX.GetNombre(), AUX.GetTabla(), AUX.GetpOS()));
 
 
@@ -1119,13 +1326,27 @@ void LlenarSano(String a)
                 MessageBox.Show("efe");
             }
 
-            Llenar2(cool3);
+            if (elimibnar == false && act == false)
+            {
+
+                Llenar2(cool3);
+
+            }
+            else if (elimibnar == true)
+            {
+                BorrarChido(ayudita);
+            }
+            else if (act == true)
+            {
+                ActChido(ayudita);
+            }
+
         }
-                  
-        
-        
-        
-        
+
+
+
+
+
         void Caso3(String TABLA11, String  COlumna11, String Colauxx, String Simbolo)
         {
             ayudita = new LinkedList<int>();
@@ -1236,9 +1457,19 @@ void LlenarSano(String a)
                 MessageBox.Show("efe");
             }
 
-            Llenar(ayudita, COlumna11, TABLA11);
+            if (elimibnar == false && act == false)
+            {
+                Llenar(ayudita, COlumna11, TABLA11);
 
-
+            }
+            else if (elimibnar == true)
+            {
+                BorrarChido(ayudita);
+            }
+            else if (act == true)
+            {
+                ActChido(ayudita);
+            }
 
 
         }
@@ -1366,7 +1597,7 @@ void LlenarSano(String a)
             {
                 MessageBox.Show("efe");
             }
-            if (elimibnar==false)
+            if (elimibnar==false && act==false)
             {
                 Llenar(ayudita, Columna11, Tabla11);
 
@@ -1375,10 +1606,83 @@ void LlenarSano(String a)
             {
                 BorrarChido(ayudita);
             }
+            else if (act==true)
+            {
+                ActChido(ayudita);
+            }
         }
 
+        void ActChido(LinkedList<int> ayudi)
+        {
+            LinkedList<Object> HELP = new LinkedList<Object>();
+            bool a = false;
+            foreach (Object alv in CampoR)
+            {
+                foreach (Object alv2 in RemplA)
+                {
 
-      void  BorrarChido(LinkedList <int > ayudi)
+                    Tablas T = Table.Bucar(TablaE);
+                    foreach (Atributo item in T.A)
+                    {
+
+                        if (item.GetNombre().Equals(alv))
+                        {
+                            Console.WriteLine("CAMPOOOO" + item.GetNombre()+"-****-*-*-*-*-*");
+                         
+                            for (int i = 0; i < item.Objetos.Count; i++)
+                            {
+                                a = false;
+                                foreach (int ayudita in ayudi)
+                                {
+                                    
+                                    if (i == ayudita)
+                                    {
+                                        a = true; 
+                                    }
+                                  
+                                }
+                                if (a == true)
+                                {
+                                    Console.WriteLine("siuuuu la encuentro"+
+                                        " "+alv2);
+                                    HELP.AddLast(alv2);
+                                }
+                                else if(a==false)
+                                {
+                                    HELP.AddLast(item.Objetos.ElementAt(i));
+                                }
+
+          
+                            }
+                            Console.WriteLine("-------------" + HELP.Count());
+                            item.Objetos.Clear();
+
+                            foreach (object el in HELP)
+                            {
+                                Console.WriteLine("--------------------" + el);
+
+                            }
+                            foreach (object iTE in HELP)
+                            {
+                                item.Objetos.AddLast(iTE);
+                            }
+                            HELP.Clear();
+                        }
+                 
+
+
+                    }
+
+                }
+            }
+        
+        
+        
+        
+        
+        
+        }
+            void  BorrarChido(LinkedList <int > ayudi)
         {
             bool a = false;
             LinkedList<Object> HELP = new LinkedList<Object>();
@@ -1599,7 +1903,7 @@ void LlenarSano(String a)
 
 
 
-            if (elimibnar == false)
+            if (elimibnar == false && act == false)
             {
                 Llenar(ayudita, Columna11, TABLA11);
 
@@ -1607,6 +1911,10 @@ void LlenarSano(String a)
             else if (elimibnar == true)
             {
                 BorrarChido(ayudita);
+            }
+            else if (act == true)
+            {
+                ActChido(ayudita);
             }
 
         }
@@ -1736,8 +2044,10 @@ void LlenarSano(String a)
         {
             Console.WriteLine("Crear");
             emparejar(Tokens.TipoToken.TAABLA);
-            
-            
+
+
+
+            ListaTablas.AddLast(alvAct.getLexema());
             NombreTabla = alvAct.getLexema();
             Table.Agregar(NombreTabla);
             emparejar(Tokens.TipoToken.ID);

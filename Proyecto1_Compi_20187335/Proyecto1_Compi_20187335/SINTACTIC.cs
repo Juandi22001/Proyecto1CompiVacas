@@ -251,7 +251,7 @@ namespace Proyecto1_Compi_20187335
             if (alvAct.getTipo_Token() == Tokens.TipoToken.COMA)
             {
                 emparejar(Tokens.TipoToken.COMA);
-
+                Est();
             }
             else
             {

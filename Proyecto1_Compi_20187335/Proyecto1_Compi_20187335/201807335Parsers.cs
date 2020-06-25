@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -93,8 +94,10 @@ namespace Proyecto1_Compi_20187335
             }
 
         }
+        bool acts = false;
         void ACTUALIZAR()
         {
+            acts = true;
             emparejar(Tokens.TipoToken.ID);
             emparejar(Tokens.TipoToken.ESTABLECER);
             emparejar(Tokens.TipoToken.PARENTESIS_ABIERTO);
@@ -120,7 +123,7 @@ namespace Proyecto1_Compi_20187335
             if (alvAct.getTipo_Token() == Tokens.TipoToken.COMA)
             {
                 emparejar(Tokens.TipoToken.COMA);
-
+                Est();
             }
             else
             {
