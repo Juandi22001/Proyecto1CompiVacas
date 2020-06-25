@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Proyecto1_Compi_20187335
 {
     class _201807335Parsers
     {
-
+        public LinkedList<ErroresTokens> ErTks = new LinkedList<ErroresTokens>();
 
         bool ayuda = false;
 
@@ -561,6 +563,7 @@ namespace Proyecto1_Compi_20187335
             {
                 if (alvAct.getTipo_Token() != tip)
                 {
+                    ErTks.AddLast(new ErroresTokens(alvAct.getLexema(), "SE ESPERABA " + " " + GetTipString(tip), alvAct.getcolumna(), alvAct.geTfila()));
                     //ERROR si no viene lo que deberia
                     Console.WriteLine("SE ESPERABA " + " " + GetTipString(tip));
                     /*   ER.ErTks.AddLast(new ErroresTokens(alvAct.getLexema(), 
@@ -755,6 +758,72 @@ namespace Proyecto1_Compi_20187335
 
             Console.WriteLine("ERROR SINTACTICO" + " " + "se esperaba" + error);
 
+        }
+
+        public void Grafo()
+        {
+            Html2(ErTks);
+        }
+
+        private void Html2(LinkedList<ErroresTokens> TErrores)
+        {
+            SaveFileDialog GuardarHtml = new SaveFileDialog();
+            GuardarHtml.Filter = "HTML|*.html";
+            if (GuardarHtml.ShowDialog() == DialogResult.OK)
+            {
+                String direccion = GuardarHtml.FileName;
+                StreamWriter pagina = new StreamWriter(direccion);
+                String codigoHtml =
+                 "<html >"
+                + "    <head>"
+                + "        <title>Reporte </title>"
+                + "    </head>"
+                + "    <body>\n"
+
+           ;
+
+
+
+
+                if (TErrores.Count > 0)
+                {
+
+
+                    codigoHtml += "    <center>" +
+                "        <h4> Reporte  Errores TOkens</h4>"
+               + "        <table border=4>"
+
+               + "                <tr>"
+               + "                    <td>#</td>"
+               + "                    <td>Fila</td>"
+               + "                    <td>Columna</td>"
+               + "                    <td>Token</td>"
+               + "        <td>Descripcion</td>"
+               + "                                     " +
+               "        </tr> "
+               ;
+
+                    foreach (ErroresTokens incorrectos in TErrores)
+                    {
+                        codigoHtml += " <tr>\n"
+               + "    <td>" + incorrectos.getindice() + "</td>"
+                + "    <td>" + incorrectos.getFila() + "</td>"
+               + "    <td>" + incorrectos.getColumna() + "</td>"
+               + "    <td>" + incorrectos.getLexema() + "</td>"
+
+               + "    <td>" + incorrectos.getDescripcion() + "</td>"
+
+
+                + "  </tr>";
+
+
+                    }
+                    codigoHtml += " </Tbody> <t/table>  </table><br<br>";
+                }
+                codigoHtml += "</body > </html > ";
+                pagina.Write(codigoHtml);
+                pagina.Close();
+            }
         }
 
     }

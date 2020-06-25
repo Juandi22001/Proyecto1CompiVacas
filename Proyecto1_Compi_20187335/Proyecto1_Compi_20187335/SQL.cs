@@ -24,6 +24,7 @@ namespace Proyecto1_Compi_20187335
         LinkedList<Object> CampoR = new LinkedList<Object>();
         LinkedList<int> ayudita = new LinkedList<int>();
         LinkedList<String> ListaTablas= new LinkedList<String>();
+        LinkedList<Actualizars>Modificar = new LinkedList<Actualizars>();
 
         ListaTablas Table = new ListaTablas();
         bool ayuda = false;
@@ -121,7 +122,8 @@ namespace Proyecto1_Compi_20187335
         {
             CampoR = new LinkedList<Object>();
             RemplA = new LinkedList<Object>();
-           
+        LinkedList<Actualizars>Modificar = new LinkedList<Actualizars>();
+
             TablaE = alvAct.getLexema();
             act=true;
             emparejar(Tokens.TipoToken.ID);
@@ -139,10 +141,13 @@ namespace Proyecto1_Compi_20187335
         void Est()
         {
             CampoR.AddLast(alvAct.getLexema());
+            CampoAct = alvAct.getLexema();
             emparejar(Tokens.TipoToken.ID);
 
             emparejar(Tokens.TipoToken.IGUAL);
             DATO2();
+
+            Modificar.AddLast(new Actualizars(CampoAct, Remplazo));
             Est2();
         }
         void Est2()
@@ -1097,13 +1102,18 @@ void LlenarSano(String a)
       ayudita.AddLast(cont);
 
                      }*/
-                    /* else if (float.Parse(Dato) == float.Parse(XD.ToString()) && Simbolo.Equals("=") && TDato.Equals("decimal"))
-                     {
-                         Console.WriteLine("encontrado");
+                     else if (float.Parse(Dato) == float.Parse(XD.ToString()) && Simbolo.Equals("=") && TDato.Equals("decimal"))
+                    {
+                        if (XD.GetTabla().Equals(TablaE))
+                        {
+                            ayudita.AddLast(XD.GetpOS());
+
+                        }
+                        Console.WriteLine("encontrado");
                         cool3.AddLast(new ObjetoCool(XD.GetNombre(), XD.GetTabla(), XD.GetpOS()));
 
 
-                     }*/
+                     }
                     /*  else if (float.Parse(Dato) != float.Parse(XD.ToString()) && Simbolo.Equals("!=") && TDato.Equals("decimal"))
                       {
                           Console.WriteLine("encontrado");
@@ -1616,16 +1626,17 @@ void LlenarSano(String a)
         {
             LinkedList<Object> HELP = new LinkedList<Object>();
             bool a = false;
-            foreach (Object alv in CampoR)
-            {
-                foreach (Object alv2 in RemplA)
-                {
+            
+                    foreach (Actualizars alv in Modificar)
+                    {
 
+                  
+                
                     Tablas T = Table.Bucar(TablaE);
                     foreach (Atributo item in T.A)
                     {
 
-                        if (item.GetNombre().Equals(alv))
+                        if (item.GetNombre().Equals(alv.GetCampo()))
                         {
                             Console.WriteLine("CAMPOOOO" + item.GetNombre()+"-****-*-*-*-*-*");
                          
@@ -1644,8 +1655,8 @@ void LlenarSano(String a)
                                 if (a == true)
                                 {
                                     Console.WriteLine("siuuuu la encuentro"+
-                                        " "+alv2);
-                                    HELP.AddLast(alv2);
+                                        " "+alv.GetRemplazo());
+                                    HELP.AddLast(alv.GetRemplazo());
                                 }
                                 else if(a==false)
                                 {
@@ -1672,15 +1683,14 @@ void LlenarSano(String a)
 
 
                     }
-
-                }
             }
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         }
             void  BorrarChido(LinkedList <int > ayudi)
         {
@@ -1760,61 +1770,61 @@ void LlenarSano(String a)
                     if (TDato.Equals("entero"))
                     {
 
-                    
-                    Console.WriteLine(XD+" "+TDato+" "+Simbolo+Dato);
-                    if (Simbolo.Equals("=") && Dato.Equals(XD) )
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
 
-                    }
-                 else    if (Simbolo.Equals("!=")  )
-                    {
+                        Console.WriteLine(XD + " " + TDato + " " + Simbolo + Dato);
+                        if (Simbolo.Equals("=") && Dato.Equals(XD))
+                        {
+                            Console.WriteLine("encontrado");
+                            ayudita.AddLast(cont);
+
+                        }
+                        else if (Simbolo.Equals("!="))
+                        {
                             if (Convert.ToInt32(XD) != Int32.Parse(Dato))
                             {
                                 Console.WriteLine("encontrado"); ayudita.AddLast(cont);
                             }
-                           
 
-                    }
-                    else if (Simbolo.Equals("<") )
+
+                        }
+                        else if (Simbolo.Equals("<"))
                         {
                             if (Convert.ToInt32(XD) <= Int32.Parse(Dato))
                             {
 
-                            
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
+
+                                Console.WriteLine("encontrado");
+                                ayudita.AddLast(cont);
                             }
                         }
-                    else if (Simbolo.Equals("<=")  )
+                        else if (Simbolo.Equals("<="))
                         {
                             if (Convert.ToInt32(XD) <= Int32.Parse(Dato))
                             {
 
-                            
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
+
+                                Console.WriteLine("encontrado");
+                                ayudita.AddLast(cont);
                             }
                         }
-                    else if (  Simbolo.Equals(">") )
-                    {
-                        if (Int32.Parse(Dato) > Int32.Parse(XD.ToString()))
+                        else if (Simbolo.Equals(">"))
                         {
+                            if (Int32.Parse(Dato) > Int32.Parse(XD.ToString()))
+                            {
 
-                        
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
+
+                                Console.WriteLine("encontrado");
+                                ayudita.AddLast(cont);
+                            }
+                        }
+                        else if (Simbolo.Equals(">=") && Convert.ToInt32(XD) >= Int32.Parse(Dato))
+                        {
+                            Console.WriteLine("encontrado");
+                            ayudita.AddLast(cont);
+
                         }
                     }
-                    else if (Simbolo.Equals(">=") && Convert.ToInt32(XD) >= Int32.Parse(Dato) )
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
-
-                    }
-                    }
-                    else if (Simbolo.Equals("=") &&Dato.Equals(XD) && TDato.Equals("cadena"))
+                    else if (Simbolo.Equals("=") && Dato.Equals(XD) && TDato.Equals("cadena"))
                     {
                         Console.WriteLine("encontrado");
                         ayudita.AddLast(cont);
@@ -1826,48 +1836,48 @@ void LlenarSano(String a)
                         ayudita.AddLast(cont);
 
                     }
-                    else if (Simbolo.Equals("=") && Dato.Equals (XD) && TDato.Equals("fecha"))
+                    else if (Simbolo.Equals("=") && Dato.Equals(XD) && TDato.Equals("fecha"))
                     {
                         Console.WriteLine("encontrado");
                         ayudita.AddLast(cont);
 
                     }
-                    else if ( Dato!=XD && Simbolo.Equals("!=") && TDato.Equals("fecha"))
+                    else if (Dato != XD && Simbolo.Equals("!=") && TDato.Equals("fecha"))
                     {
                         Console.WriteLine("encontrado");
                         ayudita.AddLast(cont);
 
                     }
-                   /* else if (DateTime.Parse(Dato) < DateTime.Parse(XD.ToString()) && Simbolo.Equals("<") && TDato.Equals("fecha"))
+                    /* else if (DateTime.Parse(Dato) < DateTime.Parse(XD.ToString()) && Simbolo.Equals("<") && TDato.Equals("fecha"))
+                     {
+                         Console.WriteLine("encontrado");
+                         ayudita.AddLast(cont);
+
+                     }
+                     else if (DateTime.Parse(Dato) <= DateTime.Parse(XD.ToString()) && Simbolo.Equals("<=") && TDato.Equals("fecha"))
+                     {
+                         Console.WriteLine("encontrado");
+                         ayudita.AddLast(cont);
+
+                     }
+                     else if (DateTime.Parse(Dato) > DateTime.Parse(XD.ToString()) && Simbolo.Equals(">") && TDato.Equals("fecha"))
+                     {
+                         Console.WriteLine("encontrado");
+                         ayudita.AddLast(cont);
+
+                     }
+                     else if (DateTime.Parse(Dato) >= DateTime.Parse(XD.ToString()) && Simbolo.Equals(">=") && TDato.Equals("fecha"))
+                     {
+                         Console.WriteLine("encontrado");
+                         ayudita.AddLast(cont);
+
+                     }*/
+                    else if (float.Parse(Dato) == float.Parse(XD.ToString()) && Simbolo.Equals("=") && TDato.Equals("decimal"))
                     {
                         Console.WriteLine("encontrado");
                         ayudita.AddLast(cont);
 
                     }
-                    else if (DateTime.Parse(Dato) <= DateTime.Parse(XD.ToString()) && Simbolo.Equals("<=") && TDato.Equals("fecha"))
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
-
-                    }
-                    else if (DateTime.Parse(Dato) > DateTime.Parse(XD.ToString()) && Simbolo.Equals(">") && TDato.Equals("fecha"))
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
-
-                    }
-                    else if (DateTime.Parse(Dato) >= DateTime.Parse(XD.ToString()) && Simbolo.Equals(">=") && TDato.Equals("fecha"))
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
-
-                    }*/
-                   /* else if (float.Parse(Dato) == float.Parse(XD.ToString()) && Simbolo.Equals("=") && TDato.Equals("decimal"))
-                    {
-                        Console.WriteLine("encontrado");
-                        ayudita.AddLast(cont);
-
-                    }*/
                   /*  else if (float.Parse(Dato) != float.Parse(XD.ToString()) && Simbolo.Equals("!=") && TDato.Equals("decimal"))
                     {
                         Console.WriteLine("encontrado");

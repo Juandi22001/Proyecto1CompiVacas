@@ -318,7 +318,7 @@ namespace Proyecto1_Compi_20187335
                             r.SelectionStart = i + 1;
                             Estado = 1;
                         }
-                        else if ("TABLA".Equals(Lexema))
+                        else if ("TABLA".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 1; r.Select(indices - Lexema.Length, Lexema.Length);
@@ -333,7 +333,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("INSERTAR".Equals(Lexema))
+                        else if ("INSERTAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 2; r.Select(indices - Lexema.Length+1
@@ -349,7 +349,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("ELIMINAR".Equals(Lexema))
+                        else if ("ELIMINAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
 
@@ -364,7 +364,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("MODIFICAR".Equals(Lexema))
+                        else if ("MODIFICAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 4; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -379,7 +379,7 @@ namespace Proyecto1_Compi_20187335
 
                         }
 
-                        else if ("SELECCIONAR".Equals(Lexema))
+                        else if ("SELECCIONAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 5; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -394,7 +394,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("ACTUALIZAR".Equals(Lexema))
+                        else if ("ACTUALIZAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 6; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -409,7 +409,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("CREAR".Equals(Lexema))
+                        else if ("CREAR".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
 
@@ -426,7 +426,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("entero".Equals(Lexema))
+                        else if ("entero".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 8; r.Select(indices - Lexema.Length, Lexema.Length);
@@ -442,7 +442,7 @@ namespace Proyecto1_Compi_20187335
 
                         }
 
-                        else if ("fecha".Equals(Lexema))
+                        else if ("fecha".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 9; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -456,7 +456,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("flotante".Equals(Lexema))
+                        else if ("flotante".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 9; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -470,7 +470,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("cadena".Equals(Lexema))
+                        else if ("cadena".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 10; r.Select(i - Lexema.Length, Lexema.Length);
@@ -485,7 +485,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("EN".Equals(Lexema))
+                        else if ("EN".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 11; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -498,7 +498,7 @@ namespace Proyecto1_Compi_20187335
                             Estado = 0;
                             i--;
                         }
-                        else if ("Y".Equals(Lexema))
+                        else if ("Y".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 11; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -511,7 +511,7 @@ namespace Proyecto1_Compi_20187335
                             Estado = 0;
                             i--;
                         }
-                        else if ("DONDE".Equals(Lexema))
+                        else if ("DONDE".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 12; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -525,7 +525,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("DE".Equals(Lexema))
+                        else if ("DE".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 12; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -539,7 +539,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("como".Equals(Lexema))
+                        else if ("como".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 13; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -555,7 +555,7 @@ namespace Proyecto1_Compi_20187335
                         }
 
                       
-                        else if ("o".Equals(Lexema))
+                        else if ("o".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 15; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -569,7 +569,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("O".Equals(Lexema))
+                        else if ("O".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 15; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -583,7 +583,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("ESTABLECER".Equals(Lexema))
+                        else if ("ESTABLECER".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
 
@@ -598,7 +598,7 @@ namespace Proyecto1_Compi_20187335
                             i--;
 
                         }
-                        else if ("VALORES".Equals(Lexema))
+                        else if ("VALORES".Equals(Lexema, StringComparison.InvariantCultureIgnoreCase))
                         {
 
                             idtoken = 17; r.Select(i - Lexema.Length + 1, Lexema.Length);
@@ -1115,6 +1115,7 @@ namespace Proyecto1_Compi_20187335
 
             Html(Tks2);
             Html2(ErTks);
+            PARS.Grafo();
         }
         public void Arbol()
         {
